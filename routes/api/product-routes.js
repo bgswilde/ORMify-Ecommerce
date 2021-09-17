@@ -6,10 +6,8 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 // get all products
 router.get('/', (req, res) => {
   // find all products
-  // be sure to include its associated Category and Tag data
   console.log('=========================')
   Product.findAll({
-    attributes: ['id', 'product_name', 'price', 'stock'],
     include: [
       {
         model: Category,
@@ -30,14 +28,12 @@ router.get('/', (req, res) => {
 
 // get one product
 router.get('/:id', (req, res) => {
-  // find a single product by its `id`
-  // be sure to include its associated Category and Tag data
+  // find a single product, specifying the id through the url params
   console.log('=========================')
   Product.findOne({
     where: {
       id: req.params.id
     },  
-    attributes: ['id', 'product_name', 'price', 'stock'],
     include: [
       {
         model: Category,
@@ -96,7 +92,7 @@ router.post('/', (req, res) => {
 
 // update product
 router.put('/:id', (req, res) => {
-  // update product data
+  // update product data, specifying the id through the url params
   Product.update(req.body, {
     where: {
       id: req.params.id,
@@ -137,7 +133,7 @@ router.put('/:id', (req, res) => {
 });
 
 router.delete('/:id', (req, res) => {
-  // delete one product by its `id` value
+  // delete one product, specifying the id through the url params
   Product.destroy({
     where: {
         id: req.params.id
